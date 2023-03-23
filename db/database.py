@@ -17,7 +17,7 @@ from fastapi import HTTPException,status
 import enum
 
 
-DATABASE_URL= "sqlite:////C:/Users/nisha/Desktop/degen_money/sql_app.db"
+DATABASE_URL= "sqlite:////C:/Users/nisha/Documents/degen_core/sql_app.db?check_same_thread=False"
 APITOKEN="bzARDatkDXorjXpd3yiwhz6LAcpAnrGy3agckFpR"
 
 database = Database(DATABASE_URL)
@@ -74,4 +74,6 @@ class Orderbook(Base):
     order_id = Column(Integer, ForeignKey("orders.id"), nullable = False)
     type = Column(Enum(OrderTypeEnum))
     symbol = Column(String(64), nullable = False)
+    status = Column(String(64))
     updated_at = Column(TIMESTAMP, default = datetime.now())
+    created_at = Column(TIMESTAMP)

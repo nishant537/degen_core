@@ -1,39 +1,44 @@
 from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
 class orders_in_model(BaseModel):
-    id: int
-    user_id: int
-    type: str
-    symbol: str
-    status: str
-    last_login: str
-    created_at : str
+    user_id = int
+    type = str
+    symbol = str
+    status = str
+    created_at = datetime
     class Config:
         orm_mode = True
         schema_extra = {
             "example": {
                 "id": 1,
-                "whmcs_id": 2,
-                "username": "nishant537",
-                "first_name": "Nishant",
-                "last_name": "Goel",
-                "email": "nishant.goel@edgevana.com",
-                "avatar": "http://s3.amazonaws.com/edgevana_avatar_bucket/1.jpg",
+                "type" : "str",
+                "symbol" : "str",
+                "status" : "str",
+                "updated_at" : "datetime",
+                "created_at" : "datetime"
             }
         }
 
 class orders_out_model(BaseModel):
-    id: int
-    name: str
-    description: str
+    id = int,
+    user_id = int
+    type = str
+    symbol = str
+    status = str
+    updated_at = datetime
+    created_at = datetime
     class Config:
         orm_mode = True
         schema_extra = {
             "example": {
-                "id": "1",
-                "name": "Full Validator",
-                "description": "Contains entire history of blockchain",
+                "id": 1,
+                "type" : "str",
+                "symbol" : "str",
+                "status" : "str",
+                "updated_at" : "datetime",
+                "created_at" : "datetime"
             }
         }
 

@@ -27,10 +27,10 @@ async def get_user(username: str,db: Session = Depends(get_db)):
 
 @router.post('/',responses = {200:ExampleResponseModel(data=[user_out_model.Config.schema_extra['example']],message='User Found'),201:ExampleResponseModel(data='...',message='New User Created'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
 async def add_user(user_data:user_in_model,db: Session = Depends(get_db)):
-    response = await post(payload=user_data)
+    response = await post(db,payload=user_data)
     return response
 
-@router.put('/',responses = {200:ExampleResponseModel(data=[user_out_model.Config.schema_extra['example']],message='User Found'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
-async def delete_user(user_id:int,db: Session = Depends(get_db)):
-    response = await put(id=user_id)
-    return response
+# @router.put('/',responses = {200:ExampleResponseModel(data=[user_out_model.Config.schema_extra['example']],message='User Found'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
+# async def delete_user(user_id:int,db: Session = Depends(get_db)):
+#     response = await put(id=user_id)
+#     return response

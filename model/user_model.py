@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
 
 class user_in_model(BaseModel):
     firstname: Optional[str] = None
@@ -7,6 +8,7 @@ class user_in_model(BaseModel):
     username: str
     email: str
     password: str
+    created_at : datetime
     class Config:
         orm_mode = True
         schema_extra = {
@@ -16,6 +18,7 @@ class user_in_model(BaseModel):
                 "username": "nishant537",
                 "email": "nishant.goel@edgevana.com",
                 "password": "nishant537",
+                "created_at": "datetime",
             }
         }
 

@@ -13,9 +13,9 @@ from typing import Optional, Union
 Add User
 '''
 async def post(db: Session,payload: orders_in_model):
-    data = db.query(Protocol).filter(payload.name == Protocol.name).first()
+    data = db.query(Order).filter(payload.name == Order.name).first()
     if data == None or len(data) == 0:
-        data = Protocol(name=payload.name,description=payload.description)
+        data = Order(name=payload.name,description=payload.description)
         db.add(data)
         db.commit()
         db.refresh(data)
