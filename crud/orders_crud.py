@@ -8,31 +8,42 @@ from model.orders_model import *
 from sqlalchemy.orm import Session
 from fastapi import Depends,Header,Request,status,HTTPException
 from typing import Optional, Union
+from html_response_codes import *
 
 '''
-Add User
+Add Order
 '''
 async def post(db: Session,payload: orders_in_model):
-    data = db.query(Order).filter(payload.name == Order.name).first()
+    data = db.query(Order).filter(payload.broker_id == Order.broker_id).first()
     if data == None or len(data) == 0:
         data = Order(name=payload.name,description=payload.description)
         db.add(data)
         db.commit()
         db.refresh(data)
-    return data
+        return ResponseModel(201,"New Order Created")
+    else:
+        return ResponseModel(200,"Duplicate Order Found")   
 
 
 '''
-Get Protocol
+Get Order
 '''
 async def get(db: Session, id: int):
-    data = db.query(Protocol).filter(Protocol.id == id).first()
-    return data
+    query = db.query(Order).filter(Order.id == id)
+    data = query.all()
+    if not data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=ErrorResponseModel(404, 'Not Found'))
+    else:
+        return ResponseModel(data = data, message = "Order Found")  
 
 '''
-Fetch all Protocols
+Fetch all Orders
 '''
 async def get_all(db: Session):
-    data = db.query(Protocol).all()
-    return data
+    query = db.query(Order)
+    data = query.all()
+    if not data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=ErrorResponseModel(404, 'Not Found'))
+    else:
+        return ResponseModel(data = data, message = "Order Found")   
 

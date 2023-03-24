@@ -17,7 +17,8 @@ from fastapi import HTTPException,status
 import enum
 
 
-DATABASE_URL= "sqlite:////C:/Users/nisha/Documents/degen_core/sql_app.db?check_same_thread=False"
+DATABASE_URL = "mysql+pymysql://root:nishant@localhost/degen_core"
+# DATABASE_URL= "sqlite:////C:/Users/nisha/Documents/degen_core/sql_app.db?check_same_thread=False"
 APITOKEN="bzARDatkDXorjXpd3yiwhz6LAcpAnrGy3agckFpR"
 
 database = Database(DATABASE_URL)

@@ -8,9 +8,10 @@ from model.orderbook_model import *
 from sqlalchemy.orm import Session
 from fastapi import Depends,Header,Request,status,HTTPException
 from typing import Optional, Union
+from html_response_codes import *
 
 '''
-Add Deployment
+Add Order to orderbook
 '''
 async def post(db: Session,payload: orderbook_in_model):
     data = db.query(Orderbook).filter(payload.name == Orderbook.name).first()
@@ -23,17 +24,25 @@ async def post(db: Session,payload: orderbook_in_model):
 
 
 '''
-Get Deployment
+Get Order
 '''
 async def get(db: Session, id: int):
-    data = db.query(Orderbook).filter(Orderbook.id == id).first()
-    return data
+    query = db.query(Orderbook).filter(id = id)
+    data = query.all()
+    if not data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=ErrorResponseModel(404, 'Not Found'))
+    else:
+        return ResponseModel(data = data, message = "Order Found")  
 
 
 '''
-Fetch all Deployments
+Fetch all Orders in orderbook
 '''
 async def get_all(db: Session):
-    data = db.query(Orderbook).all()
-    return data
+    query = db.query(Orderbook)
+    data = query.all()
+    if not data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=ErrorResponseModel(404, 'Not Found'))
+    else:
+        return ResponseModel(data = data, message = "Order Found")   
 

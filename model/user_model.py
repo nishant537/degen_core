@@ -8,7 +8,7 @@ class user_in_model(BaseModel):
     username: str
     email: str
     password: str
-    created_at : datetime
+    created_at : str
     class Config:
         orm_mode = True
         schema_extra = {
@@ -16,7 +16,7 @@ class user_in_model(BaseModel):
                 "firstname": "Nishant",
                 "lastname": "Goel",
                 "username": "nishant537",
-                "email": "nishant.goel@edgevana.com",
+                "email": "nishantgoel.nishant@gmail.com",
                 "password": "nishant537",
                 "created_at": "datetime",
             }
@@ -35,12 +35,12 @@ class user_out_model(BaseModel):
         schema_extra = {
             "example": {
                 "id": 1,
-                "whmcs_id": 2,
+                "firstname": "Nishant",
+                "lastname": "Goel",
                 "username": "nishant537",
-                "first_name": "Nishant",
-                "last_name": "Goel",
-                "email": "nishant.goel@edgevana.com",
-                "avatar": "http://s3.amazonaws.com/edgevana_avatar_bucket/1.jpg",
+                "email": "nishantgoel.nishant@gmail.com",
+                "password": "nishant537",
+                "created_at": "datetime",
             }
         }
 

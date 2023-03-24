@@ -16,18 +16,18 @@ router = APIRouter(dependencies=[Depends(auth.get_api_key)])
 
 
 @router.get("/",responses = {200:ExampleResponseModel(data=[orders_out_model.Config.schema_extra['example']],message='User Found'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
-async def get_all_orders():
-    response = await get_all()
+async def get_all_orders(db: Session = Depends(get_db)):
+    response = await get_all(db)
     return response
 
 @router.get("/{order_id}",responses = {200:ExampleResponseModel(data=[orders_out_model.Config.schema_extra['example']],message='User Found'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
 async def get_order(order_id: int,db: Session = Depends(get_db)):
-    response = await get(id=order_id)
+    response = await get(db,id=order_id)
     return response
 
 @router.post('/',responses = {200:ExampleResponseModel(data=[orders_out_model.Config.schema_extra['example']],message='User Found'),201:ExampleResponseModel(data='...',message='New User Created'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
-async def add_order(user_data:orders_in_model,db: Session = Depends(get_db)):
-    response = await post(payload=user_data)
+async def add_order(order_data:orders_in_model,db: Session = Depends(get_db)):
+    response = await post(db,payload=order_data)
     return response
 
 # @router.put('/',responses = {200:ExampleResponseModel(data=[orders_out_model.Config.schema_extra['example']],message='User Found'),404:ExampleErrorResponseModel(404, 'Not Found'),400:ExampleErrorResponseModel(400, "Bad Request")})
